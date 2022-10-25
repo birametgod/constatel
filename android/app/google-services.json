@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "860041289384",
+    "project_id": "constatel-b59d0",
+    "storage_bucket": "constatel-b59d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860041289384:android:e0f4818f6ad0bb39cfac9d",
+        "android_client_info": {
+          "package_name": "com.example.constatel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860041289384-ub7ip8f87lbfolg8hum6kic1ifvoebnn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4gYfMhPoJ8J364xyyPVRqt0oiZxfULJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860041289384-ub7ip8f87lbfolg8hum6kic1ifvoebnn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "860041289384-jift0pmd5q7j771b633ujqmjpsjcbnv9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.constatel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
