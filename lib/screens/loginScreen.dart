@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:constatel/screens/homeScreen.dart';
+import 'package:constatel/services/authentication.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:constatel/widgets/expandable_fab.dart';
+import 'package:constatel/widgets/action_button.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:location/location.dart';
+import 'package:constatel/services/location_service.dart';
+import 'dart:async';
 
-class LoginScreen extends StatelessWidget {
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _phoneController = TextEditingController();
   final _passController = TextEditingController();
-  //Place A
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
+    return Container(
+      color: Colors.white,
       padding: EdgeInsets.all(32),
       child: Form(
         child: Column(
@@ -15,11 +38,13 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Login",
+              "Constatel",
+              textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 36,
-                  fontWeight: FontWeight.w500),
+                color: Colors.grey[800],
+                fontSize: 40.0,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             SizedBox(
               height: 16,
@@ -45,16 +70,39 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 16,
             ),
-              ElevatedButton(
+            /** ElevatedButton(
                 style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                 onPressed: () {
-
+                signInWithPhoneNumber(context, _phoneController.text.trim());
                 },
                 child: const Text('Login'),
+                ),**/
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  signInWithPhoneNumber(context, _phoneController.text.trim());
+                  /** if (_formKey.currentState!.validate()) {
+                      String mobile =
+                      countryCode + phoneController.text.trim();
+                      await signInPhone(mobile, context);
+                      }**/
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFF2B903)),
+                child: Container(
+                  //color:  Color(0xFFF2B903),
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text('Continuer',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300))),
               ),
+            ),
           ],
         ),
       ),
-    ));
+    );
   }
 }

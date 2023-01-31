@@ -4,6 +4,11 @@
         android:label="constatel"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+       <!--  Add your Google Maps API key here -->
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCsssm2muVjmMAZ43uuFdKKjqtNDXG7LEIE"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,4 +36,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 </manifest>
