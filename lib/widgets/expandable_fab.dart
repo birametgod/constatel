@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:constatel/app_colors.dart';
 import 'dart:math' as math;
 
 @immutable
@@ -64,7 +65,10 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
   Widget build(BuildContext context) {
     // The SizedBox.expand constructor can be used to make a SizedBox that sizes itself to fit the parent.
     // It is equivalent to setting width and height to double.infinity.
-    return Stack(
+    return Container(
+      height: 200,
+      width: 200,
+      child: Stack(
         alignment: Alignment.bottomRight,
         clipBehavior: Clip.none,
         children: [
@@ -72,7 +76,8 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
           ..._buildExpandingActionButtons(),
           _buildTapToOpenFab(),
         ],
-      );
+      ),
+    );
   }
 
   List<Widget> _buildExpandingActionButtons() {
@@ -109,7 +114,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: AppColors.constatel.blue,
               ),
             ),
           ),
@@ -135,6 +140,8 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
+            backgroundColor: AppColors.constatel.blue,
+            heroTag: 'Constatel',
             onPressed: _toggle,
             child: Text(
               "C",

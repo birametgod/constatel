@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:constatel/app_colors.dart';
 
+@immutable
 class ActionButton extends StatelessWidget {
   const ActionButton({
     super.key,
@@ -16,7 +18,7 @@ class ActionButton extends StatelessWidget {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
+      color: AppColors.constatel.blue,
       elevation: 4.0,
       child: IconButton(
         onPressed: onPressed,

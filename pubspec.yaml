@@ -39,13 +39,14 @@ dependencies:
   firebase_core: ^1.24.0
   cloud_firestore: ^1.0.0
   firebase_auth: ^1.0.0
-  google_fonts: ^2.0.0
   provider: ^5.0.0
   country_picker: ^2.0.16
   google_maps_flutter: ^2.2.1
   location: ^4.4.0
   flutter_polyline_points: ^1.0.0
   geocoding: ^2.0.5
+  google_fonts: ^3.0.1
+  camera: ^0.10.3
 
 
 dev_dependencies:
@@ -74,6 +75,7 @@ flutter:
   assets:
     - assets/
     - assets/mapTheme/
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

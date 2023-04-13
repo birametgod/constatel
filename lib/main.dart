@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:constatel/screens/loginScreen.dart';
-import 'package:constatel/screens/mapScreen.dart';
+import 'package:constatel/services/routers.dart';
 
 
 
@@ -35,7 +33,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MapScreen(),
+      initialRoute: 'map',
+      onGenerateRoute: Routers.generateRoute,
     );
   }
 }
