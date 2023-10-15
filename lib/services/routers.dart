@@ -4,6 +4,7 @@ import 'package:constatel/screens/damageScreen.dart';
 import 'package:constatel/screens/userInformationScreen.dart';
 import 'package:constatel/screens/claim_information_screen.dart';
 import 'package:constatel/screens/claim_confirmation_screen.dart';
+import 'package:constatel/screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 
 class Routers {
@@ -21,6 +22,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) =>  const ClaimInformation());
       case 'confirmation':
         return MaterialPageRoute(builder: (_) => const ClaimConfirmation());
+      case 'login':
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

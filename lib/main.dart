@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:constatel/services/routers.dart';
+import 'package:provider/provider.dart';
+import 'package:constatel/providers/auth_provider.dart';
+import 'package:constatel/providers/user_data_provider.dart';
+import 'package:constatel/providers/car_provider.dart';
 
 
 
@@ -10,7 +14,16 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+          ChangeNotifierProvider(create: (_) => UserDataProvider()),
+          ChangeNotifierProvider(create: (_) => CarProvider()),
+        ],
+        child: MyApp(),
+      ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +46,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'map',
+      initialRoute: 'login',
       onGenerateRoute: Routers.generateRoute,
     );
   }

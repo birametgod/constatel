@@ -7,6 +7,7 @@ class AppColors {
 
 class ConstatelColors {
   Color blue = const Color(0xFF175CDC);
+  Color red = Colors.red;
 }
 
 class Dark {

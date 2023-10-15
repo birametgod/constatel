@@ -120,6 +120,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color(0xFFE7E7E7),
       body: currentLocation == null
@@ -225,7 +226,7 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 ActionButton(
                   onPressed: () => _showAction(context, 2),
-                  icon: const Icon(Icons.home_filled),
+                  icon: const Icon(Icons.map_sharp),
                 ),
               ],
             ),

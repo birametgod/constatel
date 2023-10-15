@@ -69,7 +69,7 @@ class _DamageScreenState extends State<DamageScreen> {
                             width: MediaQuery.of(context).size.width * 3 / 6,
                             height: MediaQuery.of(context).size.height * 3 / 6,
                             child: Image.asset(
-                              'assets/images/car.png',
+                              'ig',
                             ),
                           ),
                         ),
