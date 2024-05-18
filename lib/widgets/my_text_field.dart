@@ -23,40 +23,48 @@ class MyTextField extends StatelessWidget {
       child: TextFormField(
         autofocus: false,
         controller: myController,
-       // style: AppTextStyles.blackanova.alegreyaFieldTitle.copyWith(color: Colors.black),
+        style: const TextStyle(
+          fontSize: 12.0,
+          color: Colors.white
+        ),
         keyboardType: inputType,
         textInputAction: TextInputAction.next,
         validator: validator,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey.withOpacity(0.3),
           contentPadding: const EdgeInsets.all(10),
           //hintText: hintText,
           labelText: hintText,
+          labelStyle: const TextStyle(
+            color: Colors.white
+          ),
           //hintStyle: AppTextStyles.blackanova.alegreyaFieldTitle,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: Colors.grey,
+              color: Colors.transparent,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           errorBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                 width: 1,
                 color: Colors.redAccent,
               ),
-              borderRadius: BorderRadius.circular(5.0)),
+              borderRadius: BorderRadius.circular(15.0)),
           focusedErrorBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                width: 3,
+                width: 2,
                 color: Colors.redAccent,
               ),
-              borderRadius: BorderRadius.circular(5.0)),
+              borderRadius: BorderRadius.circular(15.0)),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: Colors.grey,
-              width: 2,
+              color: Colors.lightBlueAccent,
+              width: 1,
             ),
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(15.0),
           ),
         ),
       ),

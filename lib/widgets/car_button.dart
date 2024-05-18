@@ -29,32 +29,26 @@ class CarButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)))
           : ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
+              backgroundColor:  Colors.white.withOpacity(0.3),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0))),
       child: Container(
-          padding: EdgeInsets.only(right: 20.0, top: 20.0, bottom: 20.0),
+          padding: EdgeInsets.only(right: 20.0, top: 10.0, bottom: 10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                    color: isSelected ? Colors.white24 : Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: Icon(
-                  Icons.drive_eta_outlined,
-                  color: isSelected ? Colors.white : AppColors.constatel.blue,
-                ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
               ConstatelText(
                   title: "${ownerName}",
                   size: 12.0,
                   fontWeight: FontWeight.bold,
                   color: isSelected ? Colors.white : Colors.grey.shade500),
+              SizedBox(height: 20.0,),
+              Icon(
+                  Icons.car_crash_sharp,
+                  color: isSelected ? Colors.white : AppColors.constatel.blue,
+                size: 40,
+                ),
             ],
           )),
     );

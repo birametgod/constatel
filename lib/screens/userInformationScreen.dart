@@ -3,13 +3,14 @@ import 'package:constatel/widgets/my_text_button.dart';
 import 'package:constatel/widgets/my_text_field.dart';
 import 'package:constatel/widgets/car_button.dart';
 import 'package:constatel/widgets/constatel_text.dart';
-import 'package:constatel/providers/auth_provider.dart';
+import 'package:constatel/providers/auth_provider.dart' as Constatel;
 import 'package:constatel/providers/car_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:constatel/models/user.dart';
 import 'package:constatel/app_colors.dart';
 import 'package:constatel/models/car.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:constatel/widgets/rounded_button.dart';
 
 
 class UserInformationScreen extends StatefulWidget {
@@ -27,14 +28,17 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
   final licensePlateController = TextEditingController();
   final brandController = TextEditingController();
   final modelController = TextEditingController();
-  late AuthProvider authProvider;
+  final descriptionController = TextEditingController();
+
+  late Constatel.AuthProvider authProvider;
   late CarProvider carProvider;
 
   bool _isEditingCar = false; // Add this variable
   List<Car> _cars = [];
+  bool isLoading = true; // Initially set to true to show the loader
   Car? _selectedCar;
 
-  void _addCarButtonToRow(CarProvider carProvider, AuthProvider authProvider) {
+  void _addCarButtonToRow(CarProvider carProvider, Constatel.AuthProvider authProvider) {
     if (_formKey.currentState!.validate()) {
       if (!_isEditingCar) {
         setState(() {
@@ -44,16 +48,18 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
               brand: brandController.text,
               licensePlate: licensePlateController.text,
               ownerPhoneNumber: phoneNumberController.text,
-            userWhoReportId: authProvider.currentUser!.uid,
+              userWhoReportId: authProvider.currentUser!.uid,
+              description: descriptionController.text
           );
           _cars.add(newCar);
           // Save the car using the CarProvider
-          carProvider.addCar(newCar, );
+          carProvider.addCar(newCar,);
           nameController.clear();
           phoneNumberController.clear();
           licensePlateController.clear();
           brandController.clear();
           modelController.clear();
+          descriptionController.clear();
           _isEditingCar = false; // Reset editing state
         });
       }
@@ -87,6 +93,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
         _selectedCar!.licensePlate = licensePlateController.text;
         _selectedCar!.brand = brandController.text;
         _selectedCar!.model = modelController.text;
+        _selectedCar!.description = descriptionController.text;
         try {
           // Use the car's ID to update the corresponding document in Firestore
           await carProvider.updateCar(_selectedCar!);
@@ -99,6 +106,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
             licensePlateController.clear();
             modelController.clear();
             brandController.clear();
+            descriptionController.clear();
           });
         } catch(e) {
           // Handle errors here
@@ -111,21 +119,23 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
   }
 
   Future<void> fetchUserCars() async {
-     authProvider = Provider.of<AuthProvider>(context, listen: false);
+     authProvider = Provider.of<Constatel.AuthProvider>(context, listen: false);
      carProvider = Provider.of<CarProvider>(context, listen: false);
 
     try {
       final cars = await carProvider.getCarsForUser(authProvider.currentUser!.uid);
       setState(() {
         _cars = cars;
+        isLoading = false; // Set isLoading to false when data is loaded
       });
     } catch (e) {
       print('Error fetching user cars: $e');
+      isLoading = false; // Set isLoading to false when data is loaded
     }
   }
 
 
-  void _saveUserInfoToFirestore(AuthProvider authProvider) async {
+  void _saveUserInfoToFirestore(Constatel.AuthProvider authProvider) async {
     final user = authProvider.currentUser;
     if (user != null && _formKey.currentState!.validate()) {
       final userInfo = UserModel(
@@ -199,6 +209,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
   @override
   void initState() {
     // Fetch the user's cars and update the _cars list
+    isLoading = true;
     fetchUserCars();
   }
 
@@ -209,6 +220,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
     licensePlateController.dispose();
     brandController.dispose();
     modelController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -217,10 +229,10 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff3c4372),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xff3c4372),
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -228,7 +240,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
             },
             child: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
           actions: [
@@ -259,7 +271,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                       alignment: Alignment.topLeft,
                       child: ConstatelText(
                           title: "Etape 2/5: Nouveau constat",
-                          color: Colors.grey,
+                          color: Colors.white,
                           fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
@@ -270,6 +282,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                       child: ConstatelText(
                           title: "Infos Véhicule(s)",
                           fontWeight: FontWeight.w500,
+                          color: Colors.white,
                           size: 25.0),
                     ),
                     Padding(
@@ -305,6 +318,50 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                                 inputType: TextInputType.text,
                                 myController: modelController,
                                 validator: _validateName),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            TextField(
+                              controller: descriptionController,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 4,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.white
+                              ),
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.grey.withOpacity(0.3),
+                                  hintText: "Description",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        width: 1,
+                                        color: Colors.redAccent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15.0)),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        width: 2,
+                                        color: Colors.redAccent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(width: 1, color: Colors.lightBlueAccent),
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  )
+                              ),
+
+                            ),
                           ],
                         ),
                       ),
@@ -322,7 +379,9 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                     SizedBox(
                       height: 5.0,
                     ),
-                    Row(
+                    isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
@@ -343,12 +402,12 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                                 _addCarButtonToRow(carProvider, authProvider);
                               },
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
+                                 // primary: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.0))),
                               child: Container(
                                   padding: EdgeInsets.only(
-                                      right: 20.0, top: 20.0, bottom: 20.0),
+                                      right: 10.0, top: 20.0, bottom: 20.0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -381,7 +440,15 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                   ],
                 ),
               ),),
-              Padding(
+              RoundedButton(
+                  text: 'Continuer',
+                  color: Colors.white,
+                  textColor: Colors.black,
+                  widthNumber: 0.9,
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'damage');
+                  } ),
+              /*Padding(
                 padding: EdgeInsets.only(bottom: 20.0, right: 30.0),
                 child: MyTextButton(
                   backgroundColor: Colors.black87,
@@ -390,7 +457,7 @@ class _UserInformationScreenState extends State<UserInformationScreen> {
                     Navigator.pushNamed(context, 'damage');
                   },
                 ),
-              ),
+              ),*/
             ],
           )
         )));

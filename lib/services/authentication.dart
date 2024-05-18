@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:constatel/screens/confirmation_code_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:constatel/screens/homeScreen.dart';
+import 'package:constatel/screens/home_screen.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 TextEditingController codeController = TextEditingController();
@@ -10,7 +10,7 @@ TextEditingController codeController = TextEditingController();
 Future<void> signInWithPhoneNumber(BuildContext context, String mobile) async {
   print(mobile);
   auth.verifyPhoneNumber(
-    phoneNumber: "+33752516199",
+    phoneNumber: mobile,
     // Automatic handling of the SMS code on Android devices.
     verificationCompleted: (PhoneAuthCredential credential) async {
       // Android ONLY
@@ -26,7 +26,13 @@ Future<void> signInWithPhoneNumber(BuildContext context, String mobile) async {
     },
     // Handle when a code has been sent to the device from Firebase, used to prompt users to enter the code.
     codeSent: (String verificationId, int? resendToken) {
-      _dialogBuilder(context, verificationId);
+      // Navigate to the next screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConfirmationCodeScreen(verificationId: verificationId),
+        ),
+      );
     },
     // Handle a timeout of when automatic SMS code handling fails.
     codeAutoRetrievalTimeout: (String verificationId) {
@@ -73,7 +79,6 @@ Future<void> _dialogBuilder(BuildContext context, String verificationId) {
                                   builder: (context) => HomeScreen()))
                         })
                     .catchError((error) {
-                  print("this error" + error);
                 });
               },
             ),

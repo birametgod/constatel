@@ -6,6 +6,7 @@ class Car {
   String model;
   String brand;
   String userWhoReportId;
+  String description;
 
   Car({
     this.id,
@@ -14,7 +15,8 @@ class Car {
     required this.licensePlate,
     required this.model,
     required this.brand,
-    required this.userWhoReportId
+    required this.userWhoReportId,
+    required this.description
   });
 
   factory Car.fromJson(Map<String, dynamic> json) {
@@ -25,7 +27,8 @@ class Car {
       licensePlate: json['licensePlate'],
       model: json['model'],
       brand: json['brand'],
-        userWhoReportId: json['userWhoReportId']
+      userWhoReportId: json['userWhoReportId'],
+      description: json['description']
     );
   }
 
@@ -36,7 +39,8 @@ class Car {
       'licensePlate': licensePlate,
       'model': model,
       'brand': brand,
-      'userWhoReportId': userWhoReportId
+      'userWhoReportId': userWhoReportId,
+      'description': description
     };
   }
 }

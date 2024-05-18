@@ -21,6 +21,7 @@ class CarProvider with ChangeNotifier {
   }
 
   Future<List<Car>> getCarsForUser(String userId) async {
+    print(userId);
     QuerySnapshot querySnapshot = await carsCollection
         .where('userWhoReportId', isEqualTo: userId)
         .get();
@@ -38,6 +39,22 @@ class CarProvider with ChangeNotifier {
     }
 
     return cars;
+  }
+
+  Future<Car?> getCarForUser(String userId) async {
+    print(userId);
+    QuerySnapshot querySnapshot = await carsCollection
+        .where('userWhoReportId', isEqualTo: userId)
+        .limit(1) // Limit the query to retrieve only one document
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      final carData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+      return Car.fromJson(carData);
+    } else {
+      print('No car found for the given user.');
+      return null;
+    }
   }
 
 

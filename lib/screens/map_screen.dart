@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:constatel/screens/homeScreen.dart';
-import 'package:constatel/services/authentication.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:constatel/widgets/expandable_fab.dart';
-import 'package:constatel/widgets/action_button.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
-import 'package:constatel/services/location_service.dart';
 import 'package:constatel/screens/requiredFileScreen.dart';
-import 'package:constatel/app_colors.dart';
 import 'dart:async';
 
 class MapScreen extends StatefulWidget {
@@ -120,9 +113,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: const Color(0xFFE7E7E7),
+      backgroundColor: Colors.white,
       body: currentLocation == null
           ? const Center(child: Text("Loading"))
           : Stack(
@@ -189,50 +181,96 @@ class _MapScreenState extends State<MapScreen> {
                           ))
                         ],
                       ),
-                    ))
-              ],
-            ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(left: 30.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              backgroundColor: AppColors.constatel.blue,
-                onPressed: () => locateToLocation(),
-                heroTag: 'location',
-                child: Icon(Icons.my_location)
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            ExpandableFab(
-              distance: 112.0,
-              children: [
-                ActionButton(
-                  onPressed: () => _showAction(context, 0),
-                  icon: const Icon(Icons.person),
-                ),
-                ActionButton(
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RequiredFileScreen(),
+                    )),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                        margin: EdgeInsets.only(bottom: 30.0),
+                        child: FractionallySizedBox(
+                      widthFactor: 0.9,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          //primary: Color(0xff3c4372), // Use provided color or default to black87
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.home_filled,
+                                    color: Colors.white, size: 30.0),
+                                onPressed: () {
+                                  // Handle Home icon tap
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.car_crash,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RequiredFileScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.perm_identity_sharp,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                                onPressed: () {
+                                  // Handle Settings icon tap
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    )
-                  },
-                  icon: const Icon(Icons.car_crash),
-                ),
-                ActionButton(
-                  onPressed: () => _showAction(context, 2),
-                  icon: const Icon(Icons.map_sharp),
-                ),
+                    )))
               ],
             ),
-          ],
+        floatingActionButton: Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 80.0, right: 20.0),
+            child: FloatingActionButton(
+              backgroundColor: Color(0xff3c4372),
+              onPressed: () => locateToLocation(),
+              heroTag: 'location',
+              child: Icon(Icons.my_location),
+            ),
+          ),
         ),
-      ),
     );
   }
 }
+
+class CustomFloatingActionButtonLocation extends FloatingActionButtonLocation {
+  const CustomFloatingActionButtonLocation();
+
+  @override
+  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
+    const double buttonDiameter = 56.0;
+    const double margin = 8.0;
+
+    final double x = (scaffoldGeometry.scaffoldSize.width - buttonDiameter) / 2.0;
+    final double y = scaffoldGeometry.contentBottom - buttonDiameter - margin;
+
+    return Offset(x, y);
+  }
+}
+

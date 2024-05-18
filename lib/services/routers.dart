@@ -1,10 +1,12 @@
-import 'package:constatel/screens/mapScreen.dart';
+import 'package:constatel/screens/map_screen.dart';
 import 'package:constatel/screens/requiredFileScreen.dart';
-import 'package:constatel/screens/damageScreen.dart';
+import 'package:constatel/screens/damage_screen.dart';
 import 'package:constatel/screens/userInformationScreen.dart';
 import 'package:constatel/screens/claim_information_screen.dart';
 import 'package:constatel/screens/claim_confirmation_screen.dart';
-import 'package:constatel/screens/loginScreen.dart';
+import 'package:constatel/screens/sign_phone_number_screen.dart';
+import 'package:constatel/screens/login_screen.dart';
+import 'package:constatel/screens/personal_details.dart';
 import 'package:flutter/material.dart';
 
 class Routers {
@@ -24,6 +26,10 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const ClaimConfirmation());
       case 'login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case 'sign':
+        return MaterialPageRoute(builder: (_) => const SignInWithPhoneNumberScreen());
+      case 'personalDetails':
+        return MaterialPageRoute(builder: (_)=> const PersonalDetails());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

@@ -63,9 +63,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    // The SizedBox.expand constructor can be used to make a SizedBox that sizes itself to fit the parent.
-    // It is equivalent to setting width and height to double.infinity.
-    return Container(
+    return SizedBox(
       height: 200,
       width: 200,
       child: Stack(
@@ -143,7 +141,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
             backgroundColor: AppColors.constatel.blue,
             heroTag: 'Constatel',
             onPressed: _toggle,
-            child: Text(
+            child: const Text(
               "C",
               style: TextStyle(
                 fontWeight: FontWeight.w900,

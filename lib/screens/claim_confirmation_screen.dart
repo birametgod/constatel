@@ -1,7 +1,13 @@
+import 'package:constatel/models/car.dart';
 import 'package:flutter/material.dart';
 import 'package:constatel/widgets/my_text_button.dart';
 import 'package:constatel/widgets/row_with_text.dart';
 import 'package:constatel/widgets/constatel_text.dart';
+import 'package:constatel/widgets/rounded_button.dart';
+import 'package:constatel/providers/auth_provider.dart' as Constatel;
+import 'package:constatel/providers/car_provider.dart';
+import 'package:provider/provider.dart';
+
 
 class ClaimConfirmation extends StatefulWidget {
   const ClaimConfirmation({Key? key}) : super(key: key);
@@ -11,13 +17,45 @@ class ClaimConfirmation extends StatefulWidget {
 }
 
 class _ClaimConfirmationState extends State<ClaimConfirmation> {
+
+  late Constatel.AuthProvider authProvider;
+  late CarProvider carProvider;
+  late Car? _car;
+  bool isLoading = true; // Initially set to true to show the loader
+
+
+  Future<void> fetchUserCars() async {
+    authProvider = Provider.of<Constatel.AuthProvider>(context, listen: false);
+    carProvider = Provider.of<CarProvider>(context, listen: false);
+
+    try {
+      final car = await carProvider.getCarForUser(authProvider.currentUser!.uid);
+      setState(() {
+        _car = car;
+        isLoading = false; // Set isLoading to false when data is loaded
+      });
+    } catch (e) {
+      print('Error fetching user cars: $e');
+      isLoading = false; // Set isLoading to false when data is loaded
+    }
+  }
+
+
+
+  @override
+  void initState() {
+    // Fetch the user's cars and update the _cars list
+    isLoading = true;
+    fetchUserCars();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff3c4372),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xff3c4372),
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -25,7 +63,7 @@ class _ClaimConfirmationState extends State<ClaimConfirmation> {
             },
             child: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),
@@ -42,7 +80,7 @@ class _ClaimConfirmationState extends State<ClaimConfirmation> {
                     alignment: Alignment.topLeft,
                     child: ConstatelText(
                       title: "Etape 5/5: Nouveau constat",
-                      color: Colors.grey,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -55,6 +93,7 @@ class _ClaimConfirmationState extends State<ClaimConfirmation> {
                       title: "Confirmation du constat",
                       fontWeight: FontWeight.w500,
                       size: 25.0,
+                      color: Colors.white,
                     ),
                   ),
                   Container(
@@ -104,14 +143,13 @@ class _ClaimConfirmationState extends State<ClaimConfirmation> {
                     ),
                   ),
                   Expanded(child: Container()),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 20.0, right: 30.0),
-                    child: MyTextButton(
-                      backgroundColor: Colors.black87,
-                      buttonName: 'Confirmer',
-                      onTap: () {},
-                    ),
-                  )
+                  RoundedButton(
+                      text: 'Continuer',
+                      color: Colors.white,
+                      textColor: Colors.black,
+                      widthNumber: 0.9,
+                      onPressed: () {
+                      }),
                 ],
               ))
             ],

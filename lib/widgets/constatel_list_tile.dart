@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:constatel/app_colors.dart';
 import 'package:constatel/widgets/constatel_text.dart';
+
 class ConstatelListTile extends StatefulWidget {
 
   final String title;
@@ -17,23 +17,13 @@ class _ConstatelListTileState extends State<ConstatelListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Material(
-        shape: const CircleBorder(
-            side: BorderSide(
-                width: 3.0, color: Color(0xFFD2D1D1))),
-        clipBehavior: Clip.antiAlias,
-        color: Colors.white,
-        elevation: 4.0,
-        child: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            widget.iconData,
-            color: AppColors.constatel.blue,
-          ),
+      leading:  Icon(
+          widget.iconData,
+          color: Colors.white,
+          size: 30.0,
         ),
-      ),
-      title: ConstatelText(title: widget.title),
-      subtitle: ConstatelText(title: widget.subtitle),
+      title: ConstatelText(title: widget.title, color: Colors.white, fontWeight: FontWeight.bold,),
+      subtitle: ConstatelText(title: widget.subtitle , color: Colors.white,),
     );
   }
 }

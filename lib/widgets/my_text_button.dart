@@ -16,36 +16,35 @@ class MyTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          primary: backgroundColor,
+          //primary: backgroundColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0))),
       onPressed: onTap,
-      child: Container(
-          child: Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    buttonName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 18.0),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(5.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Icon(
-                      Icons.arrow_forward_sharp,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ))),
+      child: Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                buttonName,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 18.0),
+              ),
+              Container(
+                padding: const EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: const Icon(
+                  Icons.arrow_forward_sharp,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          )),
     );
   }
 }
